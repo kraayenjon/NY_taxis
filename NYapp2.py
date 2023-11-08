@@ -93,7 +93,7 @@ st.title('NYC Taxi Data Visualization')
 
 tab1, tab2 = st.tabs(["📈 Chart", "🗃 Data"])
 
-tab2.line_chart(geo_df_manhattan)
+tab2.line_chart(geo_df_manhattan['total_amount_sum'])
 
 # Use a button to trigger the data loading and processing
 if tab1.button('Load Data and Generate Map'):
