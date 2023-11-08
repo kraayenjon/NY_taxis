@@ -8,13 +8,18 @@ from io import BytesIO
 import zipfile
 import tempfile
 
-# Wrap your data processing in a function that Streamlit can cache to avoid reloading on every interaction.
+col1, col2, col3 = st.columns(3)
+col1.metric("Temperature", "70 °F", "1.2 °F")
+col2.metric("Wind", "9 mph", "-8%")
+col3.metric("Humidity", "86%", "4%")
+
+
 @st.cache(suppress_st_warning=True, allow_output_mutation=True)
 def load_and_process_data():
     final_df = pd.DataFrame()
 
     # Process taxi data
-    for i in range(1, 2):  # You can adjust the range for the months you want to include
+    for i in range(1, 13):  # You can adjust the range for the months you want to include
         month = str(i).zfill(2)
         url = f'https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2022-{month}.parquet'
         df = pd.read_parquet(url)
@@ -88,13 +93,11 @@ def load_and_process_data():
 
     return geo_df_manhattan
 
-# Use Streamlit to create the app interface
-tab1, tab2 = st.tabs(["📈 Chart", "🗃 Data"])
-
-tab1.title('NYC Taxi Data Visualization')
+# Streamlit interface
+st.title('NYC Taxi Data Visualization')
 
 # Use a button to trigger the data loading and processing
-if tab1.button('Load Data and Generate Map'):
+if st.button('Load Data and Generate Map'):
     # Load your data
     geo_df_manhattan = load_and_process_data()
 
@@ -115,15 +118,7 @@ if tab1.button('Load Data and Generate Map'):
             labels={'total_amount_sum': 'Total Amount'}
         )
         fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
-        tab1.plotly_chart(fig)
+        st.plotly_chart(fig)
 
     except Exception as e:
-        tab1.error(f"An error occurred: {e}")
-        
-# Use a button to trigger the data loading and processing
-if tab2.button('Load Data and Generate Map'):
-    # Load your data
-    geo_df_manhattan = load_and_process_data()
-    
-    tab2.line_chart(geo_df_manhattan['total_amount_sum'])
-
+        st.error(f"An error occurred: {e}")
