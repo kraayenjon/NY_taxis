@@ -89,11 +89,9 @@ def load_and_process_data():
     return geo_df_manhattan
 
 # Use Streamlit to create the app interface
-st.title('NYC Taxi Data Visualization')
-
 tab1, tab2 = st.tabs(["📈 Chart", "🗃 Data"])
 
-tab2.line_chart(geo_df_manhattan['total_amount_sum'])
+tab1.title('NYC Taxi Data Visualization')
 
 # Use a button to trigger the data loading and processing
 if tab1.button('Load Data and Generate Map'):
@@ -121,3 +119,6 @@ if tab1.button('Load Data and Generate Map'):
 
     except Exception as e:
         tab1.error(f"An error occurred: {e}")
+
+tab2.line_chart(geo_df_manhattan['total_amount_sum'])
+
