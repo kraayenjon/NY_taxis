@@ -1,0 +1,8 @@
+pandas
+geopandas
+pyproj
+plotly
+pydeck
+requests
+fiona
+streamlit
