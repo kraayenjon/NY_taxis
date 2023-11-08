@@ -119,6 +119,11 @@ if tab1.button('Load Data and Generate Map'):
 
     except Exception as e:
         tab1.error(f"An error occurred: {e}")
-
-tab2.line_chart(geo_df_manhattan['total_amount_sum'])
+        
+# Use a button to trigger the data loading and processing
+if tab2.button('Load Data and Generate Map'):
+    # Load your data
+    geo_df_manhattan = load_and_process_data()
+    
+    tab2.line_chart(geo_df_manhattan['total_amount_sum'])
 
