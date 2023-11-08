@@ -8,13 +8,12 @@ from io import BytesIO
 import zipfile
 import tempfile
 
-# Wrap your data processing in a function that Streamlit can cache to avoid reloading on every interaction.
 @st.cache(suppress_st_warning=True, allow_output_mutation=True)
 def load_and_process_data():
     final_df = pd.DataFrame()
 
     # Process taxi data
-    for i in range(1, 2):  # You can adjust the range for the months you want to include
+    for i in range(1, 13):  # You can adjust the range for the months you want to include
         month = str(i).zfill(2)
         url = f'https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2022-{month}.parquet'
         df = pd.read_parquet(url)
@@ -88,7 +87,7 @@ def load_and_process_data():
 
     return geo_df_manhattan
 
-# Use Streamlit to create the app interface
+# Streamlit interface
 st.title('NYC Taxi Data Visualization')
 
 # Use a button to trigger the data loading and processing
