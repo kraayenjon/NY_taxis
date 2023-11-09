@@ -136,7 +136,19 @@ with tabs[1]:
 
     st.area_chart(data=monthly_trips, x='month', y='total_trips', color=None, width=0, height=0, use_container_width=True)
 
-    df_grouped = df.groupby('Zone')[['Zone', 'Borough', 'total_amount_sum','passenger_count_sum', 'trip_distance_sum',]].agg({'total_amount_sum':'sum', 'passenger_count_sum':'sum', 'trip_distance_sum':'sum', 'Borough':'first'})
+    # Assuming 'month' is a column representing the month
+    trips_per_month = df.groupby(['Zone', 'month'], as_index=False)['total_trips'].sum()
+
+    # Group by 'zone' and aggregate total trips as a list
+    trips_per_month_grouped = trips_per_month.groupby('Zone')['total_trips'].apply(list).reset_index()
+
+    # Rename the column to 'total_trips_per_month'
+    trips_per_month_grouped = trips_per_month_grouped.rename(columns={'total_trips': 'total_trips_per_month'})
+
+    # Merge the list of total trips per month back into the original grouped DataFrame
+    merged_data_grouped = pd.merge(df, trips_per_month_grouped, on='Zone', how='left')
+    
+    df_grouped = merged_data_grouped.groupby('Zone')[['Zone', 'Borough', 'total_amount_sum','passenger_count_sum', 'trip_distance_sum','total_trips_per_month']].agg({'total_amount_sum':'sum', 'passenger_count_sum':'sum', 'trip_distance_sum':'sum', 'Borough':'first', 'total_trips_per_month':'first'})
 
 
     st.dataframe(df_grouped, use_container_width=True)
