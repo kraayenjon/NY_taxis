@@ -86,7 +86,7 @@ def load_and_process_data():
     # Filter for Manhattan borough if necessary
     geo_df_manhattan = geo_df[geo_df['borough'] == 'Manhattan']
 
-    return geo_df_manhattan, merged_data
+    return geo_df_manhattan, geo_df,merged_data
 
 
 
@@ -97,7 +97,7 @@ st.title('NYC Taxi Data Visualization')
 tabs = st.tabs(["Project Info", "EDA", "Map", "Graph"])
 
 # Load your data
-geo_df_manhattan, df = load_and_process_data()
+geo_df_manhattan, geo_df,df = load_and_process_data()
 
 
 # Project Info tab
@@ -128,14 +128,14 @@ with tabs[1]:
     col4.metric('Avg Fare', avg_fare_formatted)
 
     #creating a month column
-    df['month'] = final_df_2022['pickup_date'].dt.month
+    df['month'] = df['pickup_date'].dt.month
     #grouping by month
-    monthly_trips = final_df_2022.groupby('month', as_index=True).agg({'total_trips': 'sum'}).sort_index()
+    monthly_trips = df.groupby('month', as_index=True).agg({'total_trips': 'sum'}).sort_index()
 
     
     st.area_chart(data=monthly_trips, x='month', y='total_trips', color=None, width=0, height=0, use_container_width=True)
     
-    st.dataframe(df[:30])
+    st.dataframe(geo_df)
 
 
 
