@@ -128,9 +128,9 @@ with tabs[2]:
     # if st.button('Load Data and Generate Map'):
 
         # Display the map
-        try:
+    try:
             # Assuming geo_df_manhattan is returned from your data processing function
-            fig = px.choropleth_mapbox(
+        fig = px.choropleth_mapbox(
                 geo_df_manhattan,
                 geojson=geo_df_manhattan.geometry,
                 locations=geo_df_manhattan.index,
@@ -143,13 +143,13 @@ with tabs[2]:
                 opacity=0.5,
                 labels={'total_amount_sum': 'Total Amount'}
             )
-            fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
+        fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
 
             # Display the map inside the map container
-            with map_container:
+        with map_container:
                 st.plotly_chart(fig)
 
-        except Exception as e:
+    except Exception as e:
             st.error(f"An error occurred: {e}")
 
 # Graph tab
