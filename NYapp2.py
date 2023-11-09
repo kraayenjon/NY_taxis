@@ -141,7 +141,7 @@ with tabs[1]:
     monthly_trips['total_trips_M'] = monthly_trips['total_trips']/1000000
     monthly_trips['month'] = monthly_trips['month'].apply(lambda x: calendar.month_abbr[x])
     monthly_trips = monthly_trips.sort_values('month', ascending=True)
-    sorted_months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'])
+    sorted_months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
     st.header('Monthly Trips by Month')
     st.area_chart(data=monthly_trips, x='sorted_months', y='total_trips_M', color=None, width=0, height=0, use_container_width=True)
