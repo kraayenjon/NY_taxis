@@ -131,8 +131,10 @@ with tabs[1]:
     col4.metric('Avg Fare', avg_fare_formatted)
 
     #grouping by month
-    monthly_trips = df.groupby('month', as_index=False).agg({'total_trips': 'sum'}).sort_index()
+    monthly_trips = df.groupby('month', as_index=False).agg({'total_trips': 'sum'}).sort_values('month')
     monthly_trips['month'] = monthly_trips['month'].apply(lambda x: calendar.month_abbr[x])
+    monthly_trips['total_trips'] = monthly_trips['total_trips'].apply(lambda x: f'{x/10**6:.2f}M')
+
 
     st.area_chart(data=monthly_trips, x='month', y='total_trips', color=None, width=0, height=0, use_container_width=True)
 
