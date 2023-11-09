@@ -143,7 +143,8 @@ with tabs[1]:
     monthly_trips = monthly_trips.sort_values('month', ascending=True)
 
     st.header('Monthly Trips by Month')
-    st.area_chart(data=monthly_trips, x='month', y='total_trips_M', color=None, width=0, height=0, use_container_width=True)
+    st.area_chart(data=monthly_trips, x='month', y='total_trips_M', color=None, width=0, height=0, use_container_width=True, sort= ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'])
+
 
     # Assuming 'month' is a column representing the month
     trips_per_month = df.groupby(['Zone', 'month'], as_index=False)['total_trips'].sum()
