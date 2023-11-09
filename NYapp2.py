@@ -7,6 +7,8 @@ import requests
 from io import BytesIO
 import zipfile
 import tempfile
+import calendar
+
 
 # Wrap your data processing in a function that Streamlit can cache to avoid reloading on every interaction.
 @st.cache(suppress_st_warning=True, allow_output_mutation=True)
@@ -130,13 +132,14 @@ with tabs[1]:
 
     #grouping by month
     monthly_trips = df.groupby('month', as_index=False).agg({'total_trips': 'sum'}).sort_index()
+    monthly_trips['month'] = monthly_trips['month'].apply(lambda x: calendar.month_abbr[x])
 
     st.area_chart(data=monthly_trips, x='month', y='total_trips', color=None, width=0, height=0, use_container_width=True)
 
     df_grouped = df.groupby('Zone')[['Zone', 'Borough', 'total_amount_sum','passenger_count_sum', 'trip_distance_sum',]].agg({'total_amount_sum':'sum', 'passenger_count_sum':'sum', 'trip_distance_sum':'sum', 'Borough':'first'})
 
 
-    st.dataframe(df_grouped)
+    st.dataframe(df_grouped, use_container_width=True)
 
 
 
