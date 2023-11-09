@@ -86,7 +86,7 @@ def load_and_process_data():
     # Filter for Manhattan borough if necessary
     geo_df_manhattan = geo_df[geo_df['borough'] == 'Manhattan']
 
-    return geo_df_manhattan
+    return geo_df_manhattan, merged_data_gps
 
 
 
@@ -97,7 +97,8 @@ st.title('NYC Taxi Data Visualization')
 tabs = st.tabs(["Project Info", "EDA", "Map", "Graph"])
 
 # Load your data
-geo_df_manhattan = load_and_process_data()
+geo_df_manhattan, df = load_and_process_data()
+
 
 # Project Info tab
 with tabs[0]:
@@ -107,8 +108,15 @@ with tabs[0]:
 # EDA tab
 with tabs[1]:
     st.title('EDA')
-    st.write("Add your EDA code here.")
-    
+    #st.write("Add your EDA code here.")
+    col1, col2, col3 = st.columns(3)
+    col1.metric("Temperature", "70 °F", "1.2 °F")
+    col2.metric("Wind", "9 mph", "-8%")
+    col3.metric("Humidity", "86%", "4%")
+
+
+
+
 # Map tab
 with tabs[2]:
     st.title('Map')
@@ -116,10 +124,8 @@ with tabs[2]:
     # Define a container for the map
     map_container = st.container()
 
-    # Use a button to trigger the data loading and processing
-    #if st.button('Load Data and Generate Map'):
-        # Load your data
-     #   geo_df_manhattan = load_and_process_data()
+    # Use a button to trigger the data loading and processing (Optional, as data is already loaded)
+    # if st.button('Load Data and Generate Map'):
 
         # Display the map
         try:
