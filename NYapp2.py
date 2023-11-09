@@ -147,4 +147,3 @@ with tabs[2]:
 with tabs[3]:
     st.title('Graph')
     st.write("Add your graph code here.")
-In this modified code, I've added four tabs: "
