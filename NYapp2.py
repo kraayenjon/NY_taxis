@@ -151,8 +151,19 @@ with tabs[1]:
     df_grouped = merged_data_grouped.groupby('Zone')[['Zone', 'Borough', 'total_amount_sum','passenger_count_sum', 'trip_distance_sum','total_trips_per_month']].agg({'total_amount_sum':'sum', 'passenger_count_sum':'sum', 'trip_distance_sum':'sum', 'Borough':'first', 'total_trips_per_month':'first'})
 
 
-    st.dataframe(df_grouped, use_container_width=True)
-
+    #st.dataframe(df_grouped, use_container_width=True)
+    st.data_editor(
+    df_grouped,
+    column_config={
+        "total_trips_per_month": st.column_config.LineChartColumn(
+            "Total Trips (per month)",
+            width="medium",
+            help="The total trips during 2022",
+            y_min=0,
+            y_max=100,
+         ),
+    },
+    hide_index=True)
 
 
 # Map tab
