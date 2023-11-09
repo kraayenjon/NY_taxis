@@ -112,7 +112,7 @@ with tabs[1]:
 
     total_rides = df['total_trips'].sum()
     total_fares = df['total_amount_sum'].sum()
-    avg_fare  = df['total_amount_sum'].mean()
+    avg_fare  = df['total_amount_mean'].mean()
     total_passengers = df['passenger_count_sum'].sum()
 
     total_rides_formatted = '{:.1f}M'.format(total_rides/1000000)
