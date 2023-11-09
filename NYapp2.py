@@ -86,7 +86,7 @@ def load_and_process_data():
     # Filter for Manhattan borough if necessary
     geo_df_manhattan = geo_df[geo_df['borough'] == 'Manhattan']
 
-    return geo_df_manhattan, merged_data_gps
+    return geo_df_manhattan, merged_data
 
 
 
@@ -110,8 +110,8 @@ with tabs[1]:
     st.title('EDA')
     #st.write("Add your EDA code here.")
     col1, col2, col3 = st.columns(3)
-    col1.metric("Temperature", "70 °F", "1.2 °F")
-    col2.metric("Wind", "9 mph", "-8%")
+    col1.metric("Total Rides", "70 °F", "1.2 °F")
+    col2.metric("Total Fares", "9 mph", "-8%")
     col3.metric("Humidity", "86%", "4%")
 
     st.dataframe(df[:30])
