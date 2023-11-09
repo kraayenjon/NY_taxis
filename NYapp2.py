@@ -96,6 +96,9 @@ st.title('NYC Taxi Data Visualization')
 # Define tabs
 tabs = st.tabs(["Project Info", "EDA", "Map", "Graph"])
 
+# Load your data
+geo_df_manhattan = load_and_process_data()
+
 # Project Info tab
 with tabs[0]:
     st.title('Project Info')
@@ -114,9 +117,9 @@ with tabs[2]:
     map_container = st.container()
 
     # Use a button to trigger the data loading and processing
-    if st.button('Load Data and Generate Map'):
+    #if st.button('Load Data and Generate Map'):
         # Load your data
-        geo_df_manhattan = load_and_process_data()
+     #   geo_df_manhattan = load_and_process_data()
 
         # Display the map
         try:
