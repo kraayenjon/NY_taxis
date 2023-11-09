@@ -109,8 +109,12 @@ with tabs[0]:
 with tabs[1]:
     st.title('EDA')
     #st.write("Add your EDA code here.")
+
+    total_rides = df['total_trips'].sum()
+
+    
     col1, col2, col3 = st.columns(3)
-    col1.metric("Total Rides", "70 °F", "1.2 °F")
+    col1.metric("Total Rides", total_rides)
     col2.metric("Total Fares", "9 mph", "-8%")
     col3.metric("Humidity", "86%", "4%")
 
