@@ -48,6 +48,7 @@ def load_and_process_data():
 
     # Filter for year 2022
     final_df['pickup_date'] = pd.to_datetime(final_df['pickup_date'])
+    final_df['month'] = final_df['pickup_date'].dt.month
     final_df_2022 = final_df[final_df['pickup_date'].dt.year >= 2022].copy()
     final_df_2022.loc[:, 'tip_ratio'] = final_df_2022['tip_amount_sum'] / final_df_2022['total_amount_sum']
 
@@ -127,12 +128,9 @@ with tabs[1]:
     col3.metric("Total Fares", total_fares_formatted)
     col4.metric('Avg Fare', avg_fare_formatted)
 
-    #creating a month column
-    df['month'] = df['pickup_date'].dt.month
     #grouping by month
     monthly_trips = df.groupby('month', as_index=True).agg({'total_trips': 'sum'}).sort_index()
 
-    
     st.area_chart(data=monthly_trips, x='month', y='total_trips', color=None, width=0, height=0, use_container_width=True)
     
     st.dataframe(geo_df)
