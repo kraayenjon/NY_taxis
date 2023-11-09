@@ -93,42 +93,58 @@ def load_and_process_data():
 # Streamlit interface
 st.title('NYC Taxi Data Visualization')
 
-# Define a container for the title
-title_container = st.container()
+# Define tabs
+tabs = st.tabs(["Project Info", "EDA", "Map", "Graph"])
 
-# Define a container for the map
-map_container = st.container()
+# Project Info tab
+with tabs[0]:
+    st.title('Project Info')
+    st.write("Add your project information here.")
+    
+# EDA tab
+with tabs[1]:
+    st.title('EDA')
+    st.write("Add your EDA code here.")
+    
+# Map tab
+with tabs[2]:
+    st.title('Map')
 
-# Use a button to trigger the data loading and processing
-if st.button('Load Data and Generate Map'):
-    # Load your data
-    geo_df_manhattan = load_and_process_data()
+    # Define a container for the map
+    map_container = st.container()
 
-    # Display the map
-    try:
-        # Assuming geo_df_manhattan is returned from your data processing function
-        fig = px.choropleth_mapbox(
-            geo_df_manhattan,
-            geojson=geo_df_manhattan.geometry,
-            locations=geo_df_manhattan.index,
-            color='total_amount_sum',
-            color_continuous_scale="Viridis",
-            range_color=(0, max(geo_df_manhattan.total_amount_sum)),
-            mapbox_style="open-street-map",
-            zoom=10,
-            center={"lat": 40.7128, "lon": -74.0060},
-            opacity=0.5,
-            labels={'total_amount_sum': 'Total Amount'}
-        )
-        fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
+    # Use a button to trigger the data loading and processing
+    if st.button('Load Data and Generate Map'):
+        # Load your data
+        geo_df_manhattan = load_and_process_data()
 
-        # Display the map inside the map container
-        with map_container:
-            st.plotly_chart(fig)
+        # Display the map
+        try:
+            # Assuming geo_df_manhattan is returned from your data processing function
+            fig = px.choropleth_mapbox(
+                geo_df_manhattan,
+                geojson=geo_df_manhattan.geometry,
+                locations=geo_df_manhattan.index,
+                color='total_amount_sum',
+                color_continuous_scale="Viridis",
+                range_color=(0, max(geo_df_manhattan.total_amount_sum)),
+                mapbox_style="open-street-map",
+                zoom=10,
+                center={"lat": 40.7128, "lon": -74.0060},
+                opacity=0.5,
+                labels={'total_amount_sum': 'Total Amount'}
+            )
+            fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
 
-    except Exception as e:
-        st.error(f"An error occurred: {e}")
+            # Display the map inside the map container
+            with map_container:
+                st.plotly_chart(fig)
 
-# Display the title outside the container
-with title_container:
-    st.title('NYC Taxi Data Visualization')
+        except Exception as e:
+            st.error(f"An error occurred: {e}")
+
+# Graph tab
+with tabs[3]:
+    st.title('Graph')
+    st.write("Add your graph code here.")
+In this modified code, I've added four tabs: "
