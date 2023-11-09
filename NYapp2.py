@@ -114,6 +114,7 @@ with tabs[1]:
     col2.metric("Wind", "9 mph", "-8%")
     col3.metric("Humidity", "86%", "4%")
 
+    st.dataframe(df[:30])
 
 
 
