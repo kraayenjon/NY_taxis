@@ -111,12 +111,21 @@ with tabs[1]:
     #st.write("Add your EDA code here.")
 
     total_rides = df['total_trips'].sum()
+    total_fares = df['total_amount_sum'].sum()
+    avg_fare  = df['total_amount_sum'].mean()
+    total_passengers = df['passenger_count_sum'].sum()
 
+    total_rides_formatted = '{:.1f}M'.format(total_rides/1000000)
+    total_fares_formatted = '{:.1f}M'.format(total_fares/1000000)
+    avg_fare_formatted = '{:.2f}'.format(avg_fare)  
+    total_passengers_formatted = '{:.1f}M'.format(total_passengers/1000000)
     
-    col1, col2, col3 = st.columns(3)
-    col1.metric("Total Rides", total_rides)
-    col2.metric("Total Fares", "9 mph", "-8%")
-    col3.metric("Humidity", "86%", "4%")
+    
+    col1, col2, col3, col4 = st.columns(4)    
+    col1.metric("Total Rides", total_rides_formatted)
+    col2.metric("Total Passengers", total_passengers_formatted)
+    col3.metric("Total Fares", total_fares_formatted)
+    col4.metric('Avg Fare', avg_fare_formatted)
 
     st.dataframe(df[:30])
 
