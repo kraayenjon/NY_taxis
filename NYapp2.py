@@ -133,7 +133,7 @@ with tabs[1]:
 
     st.area_chart(data=monthly_trips, x='month', y='total_trips', color=None, width=0, height=0, use_container_width=True)
 
-    df_grouped = df.groupby('Zone')[['Zone', 'borough', 'total_amount_sum','passenger_count_sum', 'trip_distance_sum']].agg({'total_amount_sum':'sum', 'passenger_count_sum':'sum', 'trip_distance_sum':'sum', 'borough':'first'})
+    df_grouped = df.groupby('Zone')[['Zone', 'Borough', 'total_amount_sum','passenger_count_sum', 'trip_distance_sum',]].agg({'total_amount_sum':'sum', 'passenger_count_sum':'sum', 'trip_distance_sum':'sum', 'Borough':'first'})
 
 
     #st.dataframe(df_grouped)
