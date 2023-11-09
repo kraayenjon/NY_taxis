@@ -132,13 +132,12 @@ with tabs[1]:
 
     #grouping by month
     monthly_trips = df.groupby('month', as_index=False).agg({'total_trips': 'sum'}).sort_values('month', ascending=True)
-    monthly_trips['month'] = monthly_trips['month'].apply(lambda x: calendar.month_abbr[x])
-    monthly_trips['total_trips'] = monthly_trips['total_trips'].apply(lambda x: f'{x/10**6:.2f}')
-    # sorting monthly_trips by month
     monthly_trips = monthly_trips.sort_values('month', ascending=True)
+    monthly_trips['month'] = monthly_trips['month'].apply(lambda x: calendar.month_abbr[x])
+    #monthly_trips['total_trips_M'] = monthly_trips['total_trips']/1000000
 
     st.header('Monthly Trips by Month')
-    st.area_chart(data=monthly_trips, x='month', y='total_trips', color=None, width=0, height=0, use_container_width=True)
+    st.area_chart(data=monthly_trips, x='month', y='total_trips_M', color=None, width=0, height=0, use_container_width=True)
 
     # Assuming 'month' is a column representing the month
     trips_per_month = df.groupby(['Zone', 'month'], as_index=False)['total_trips'].sum()
