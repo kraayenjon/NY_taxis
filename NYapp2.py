@@ -127,6 +127,14 @@ with tabs[1]:
     col3.metric("Total Fares", total_fares_formatted)
     col4.metric('Avg Fare', avg_fare_formatted)
 
+    #creating a month column
+    df['month'] = final_df_2022['pickup_date'].dt.month
+    #grouping by month
+    monthly_trips = final_df_2022.groupby('month', as_index=True).agg({'total_trips': 'sum'}).sort_index()
+
+    
+    st.area_chart(data=monthly_trips, x='month', y='total_trips', color=None, width=0, height=0, use_container_width=True)
+    
     st.dataframe(df[:30])
 
 
