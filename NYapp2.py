@@ -163,7 +163,8 @@ with tabs[1]:
             y_max=100,
          ),
     },
-    hide_index=True)
+    hide_index=False, 
+    use_container_width=True)
 
 
 # Map tab
