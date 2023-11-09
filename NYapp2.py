@@ -136,7 +136,7 @@ with tabs[1]:
     df_grouped = df.groupby('Zone')[['Zone', 'Borough', 'total_amount_sum','passenger_count_sum', 'trip_distance_sum',]].agg({'total_amount_sum':'sum', 'passenger_count_sum':'sum', 'trip_distance_sum':'sum', 'Borough':'first'})
 
 
-    #st.dataframe(df_grouped)
+    st.dataframe(df_grouped)
 
 
 
