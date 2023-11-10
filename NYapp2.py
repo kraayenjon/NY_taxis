@@ -53,7 +53,7 @@ def load_and_process_data():
 
     # Filter for year 2022
     final_df['pickup_date'] = pd.to_datetime(final_df['pickup_date'])
-    final_df['month'] = final_df['pickup_date'].dt.month
+    #final_df['month'] = final_df['pickup_date'].dt.month
     final_df_2022 = final_df[final_df['pickup_date'].dt.year >= 2022].copy()
     final_df_2022.loc[:, 'tip_ratio'] = final_df_2022['tip_amount_sum'] / final_df_2022['fare_amount_sum']
 
@@ -79,7 +79,7 @@ def load_and_process_data():
     merged_data = pd.merge(final_df_2022, borough_lookup, left_on='PULocationID', right_on='LocationID')
 
     # dropping columns
-    merged_data = merged_data.drop(columns= ['pickup_date',
+    merged_data = merged_data.drop(columns= [
        'PULocationID', 'DOLocationID',
        'fare_amount_sum',  'tip_amount_sum','LocationID'], axis=1)
 
@@ -148,10 +148,11 @@ with tabs[1]:
     col4.metric('Avg Fare', avg_fare_formatted)
 
     #grouping by month
+    df['pickup_date'] = pd.to_datetime(final_df['pickup_date'])
+    df['month'] = df['pickup_date'].dt.month
+    
     monthly_trips = df.groupby('month', as_index=False).agg({'total_trips': 'sum'})
-    monthly_trips['month'] = pd.to_datetime(monthly_trips['month'], format='%m')
-    #monthly_trips['month'] = monthly_trips['month'].dt.strftime('%b')
-
+    
     monthly_trips['total_trips_M'] = monthly_trips['total_trips']/1000000
 
     
