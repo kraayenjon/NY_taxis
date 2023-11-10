@@ -150,7 +150,7 @@ with tabs[1]:
     #grouping by month
     monthly_trips = df.groupby('month', as_index=False).agg({'total_trips': 'sum'})
     monthly_trips['month'] = pd.to_datetime(monthly_trips['month'], format='%m')
-    monthly_trips['month'] = monthly_trips['month'].dt.strftime('%b')
+    #monthly_trips['month'] = monthly_trips['month'].dt.strftime('%b')
 
     monthly_trips['total_trips_M'] = monthly_trips['total_trips']/1000000
 
