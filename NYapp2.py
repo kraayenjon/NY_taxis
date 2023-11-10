@@ -264,7 +264,7 @@ with tabs[3]:
 # Create links using the DataFrame
         links = []
         for index, row in df.iterrows():
-        links.append({
+            links.append({
         'source': all_boroughs.index(row['Borough_PU']),
         'target': len(all_boroughs) + all_boroughs.index(row['Borough_DO']),
         'value': row['total_trips'],
