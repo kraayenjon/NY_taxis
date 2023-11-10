@@ -9,7 +9,6 @@ import zipfile
 import tempfile
 import calendar
 
-
 # Wrap your data processing in a function that Streamlit can cache to avoid reloading on every interaction.
 @st.cache(suppress_st_warning=True, allow_output_mutation=True)
 def load_and_process_data():
@@ -149,15 +148,15 @@ with tabs[1]:
     col4.metric('Avg Fare', avg_fare_formatted)
 
     #grouping by month
-    monthly_trips = df.groupby('month', as_index=True).agg({'total_trips': 'sum'})
-    monthly_trips['total_trips_M'] = monthly_trips['total_trips']/1000000
-    
-    monthly_trips = monthly_trips.sort_index()
+    monthly_trips = df.groupby('month', as_index=False).agg({'total_trips': 'sum'})
+    monthly_trips['month'] = pd.to_datetime(monthly_trips['month'], format='%m')
+    monthly_trips['month'] = monthly_trips['month'].dt.strftime('%b')
 
+    monthly_trips['total_trips_M'] = monthly_trips['total_trips']/1000000
 
     
     st.header('Total Trips by Month (in millions)')
-    st.area_chart(data=monthly_trips, x=None, y='total_trips_M', color=None, width=0, height=0, use_container_width=True)
+    st.area_chart(data=monthly_trips, x='month', y='total_trips_M', color=None, width=0, height=0, use_container_width=True)
 
     
     # Assuming 'month' is a column representing the month
