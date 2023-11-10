@@ -111,7 +111,7 @@ def load_and_process_data():
 
 
 # Streamlit interface
-st.title('NYC Taxi Data Visualization')
+st.title('NYC Taxi Rides Analysis')
 
 # Define tabs
 tabs = st.tabs(["Project Info", "EDA", "Map", "Graph"])
@@ -123,6 +123,7 @@ geo_df_manhattan,df = load_and_process_data()
 # Project Info tab
 with tabs[0]:
     st.title('Project Info')
+    st.subheader('
     st.write("Add your project information here.")
     
 # EDA tab
@@ -202,7 +203,7 @@ with tabs[2]:
 
         # Display the map
     try:
-            # Assuming geo_df_manhattan is returned from your data processing function
+            
         fig = px.choropleth_mapbox(
                 geo_df_manhattan,
                 geojson=geo_df_manhattan.geometry,
@@ -212,10 +213,10 @@ with tabs[2]:
                 range_color=(0, max(geo_df_manhattan.total_amount_sum)),
                 mapbox_style="open-street-map",
                 zoom=10,
-                #center={"lat": 40.7128, "lon": -74.0060},
                 center = {"lat": 40.7831, "lon":-73.9654}, #central park
                 opacity=0.5,
-                labels={'total_amount_sum': 'Total Amount', 'Zone':'Zone', 'tip_ratio':'Tip Ratio'}
+                labels={'total_amount_sum': 'Total Amount', 'Zone':'Zone', 'tip_ratio':'Tip Ratio'},
+            featureidkey="properties.Zone"
             )
         fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
 
