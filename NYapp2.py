@@ -151,11 +151,15 @@ with tabs[1]:
     #grouping by month
     monthly_trips = df.groupby('month', as_index=False).agg({'total_trips': 'sum'})
     monthly_trips['total_trips_M'] = monthly_trips['total_trips']/1000000
-    monthly_trips = monthly_trips.sort_values('month', ascending=True)
+    
+    #monthly_trips = monthly_trips.sort_values('month', ascending=True)
     #monthly_trips['month'] = monthly_trips['month'].apply(lambda x: calendar.month_abbr[x])
     
+    
+    # Sort the DataFrame by month
     month_order = [calendar.month_abbr[i] for i in range(1, 13)]
-    monthly_trips['month'] = pd.Categorical(monthly_trips['month'], categories=month_order, ordered=True)
+    monthly_trips['month'] = monthly_trips['month'].apply(lambda x: calendar.month_abbr[x])
+    monthly_trips = monthly_trips.sort_values('month', key=lambda col: col.map({v: i for i, v in enumerate(month_order)}))
 
 
     
