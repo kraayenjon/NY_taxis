@@ -207,7 +207,7 @@ with tabs[2]:
         fig = px.choropleth_mapbox(
                 geo_df_manhattan,
                 geojson=geo_df_manhattan.geometry,
-                locations=geo_df_manhattan.index,
+                locations=geo_df_manhattan.Zone,  #changed from .index
                 color='total_amount_sum',
                 color_continuous_scale="Viridis",
                 range_color=(0, max(geo_df_manhattan.total_amount_sum)),
@@ -216,7 +216,7 @@ with tabs[2]:
                 #center={"lat": 40.7128, "lon": -74.0060},
                 center = {"lat": 40.7831, "lon":-73.9654}, #central park
                 opacity=0.5,
-                labels={'total_amount_sum': 'Total Amount'}
+                labels={'total_amount_sum': 'Total Amount', 'Zone':'Zone', 'tip_ratio':'Tip Ratio'}
             )
         fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
 
