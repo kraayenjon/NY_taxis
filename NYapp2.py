@@ -193,13 +193,12 @@ with tabs[1]:
 
 # Map tab
 with tabs[2]:
-    st.title('Map')
+    st.title('Heatmap of NYC Taxis Rides')
+    st.markdown("Explore this interactive map to discover the most frequented locations for taxi pickups in New York.")
 
     # Define a container for the map
     map_container = st.container()
 
-    # Use a button to trigger the data loading and processing (Optional, as data is already loaded)
-    # if st.button('Load Data and Generate Map'):
 
         # Display the map
     try:
@@ -207,7 +206,7 @@ with tabs[2]:
         fig = px.choropleth_mapbox(
                 geo_df_manhattan,
                 geojson=geo_df_manhattan.geometry,
-                locations=geo_df_manhattan.Zone,  #changed from .index
+                locations=geo_df_manhattan.index, 
                 color='total_amount_sum',
                 color_continuous_scale="Viridis",
                 range_color=(0, max(geo_df_manhattan.total_amount_sum)),
