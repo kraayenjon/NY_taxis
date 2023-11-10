@@ -157,7 +157,7 @@ with tabs[1]:
 
     
     st.header('Total Trips by Month (in millions)')
-    st.area_chart(data=monthly_trips, x=monthly_trips.index, y='total_trips_M', color=None, width=0, height=0, use_container_width=True)
+    st.area_chart(data=monthly_trips, x=None, y='total_trips_M', color=None, width=0, height=0, use_container_width=True)
 
     
     # Assuming 'month' is a column representing the month
