@@ -91,7 +91,7 @@ def load_and_process_data():
         'total_amount_sum': 'sum',
         'tip_ratio': 'mean',
         'geometry': 'first',
-        'borough': 'max'
+        'Borough': 'max'
     })
 
     # Create GeoDataFrame
@@ -101,7 +101,7 @@ def load_and_process_data():
     geo_df.reset_index(inplace=True)
 
     # Filter for Manhattan borough if necessary
-    geo_df_manhattan = geo_df[geo_df['borough'] == 'Manhattan']
+    geo_df_manhattan = geo_df[geo_df['Borough'] == 'Manhattan']
 
     return geo_df_manhattan,merged_data
 
