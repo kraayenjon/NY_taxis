@@ -152,9 +152,14 @@ with tabs[1]:
     monthly_trips = df.groupby('month', as_index=False).agg({'total_trips': 'sum'})
     monthly_trips['total_trips_M'] = monthly_trips['total_trips']/1000000
     monthly_trips = monthly_trips.sort_values('month', ascending=True)
-    monthly_trips['month'] = monthly_trips['month'].apply(lambda x: calendar.month_abbr[x])
+    #monthly_trips['month'] = monthly_trips['month'].apply(lambda x: calendar.month_abbr[x])
+    
+    month_order = [calendar.month_abbr[i] for i in range(1, 13)]
+    monthly_trips['month'] = pd.Categorical(monthly_trips['month'], categories=month_order, ordered=True)
 
-    st.header('Monthly Trips by Month')
+
+    
+    st.header('Total Trips by Month (in millions)')
     st.area_chart(data=monthly_trips, x='month', y='total_trips_M', color=None, width=0, height=0, use_container_width=True)
 
     # Assuming 'month' is a column representing the month
@@ -211,7 +216,7 @@ with tabs[2]:
                 mapbox_style="open-street-map",
                 zoom=10,
                 #center={"lat": 40.7128, "lon": -74.0060},
-                center = {"lat": 40.7831, "lon":73.9654}, #central park
+                center = {"lat": 40.7831, "lon":-73.9654}, #central park
                 opacity=0.5,
                 labels={'total_amount_sum': 'Total Amount'}
             )
