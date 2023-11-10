@@ -234,8 +234,7 @@ with tabs[3]:
     st.write("Add your graph code here.")
     
     # Define the CSV file path
-    csv_file_path = 'https://github.com/kraayenjon/NY_taxis/blob/main/graph_ny_taxis.csv'
-
+    csv_file_path = 'https://raw.githubusercontent.com/kraayenjon/NY_taxis/main/graph_ny_taxis.csv'
     try:
         # Read data from the predefined CSV file
         df = pd.read_csv(csv_file_path)
