@@ -70,7 +70,7 @@ def load_and_process_data():
 
     # Download borough lookup
     borough_lookup_url = 'https://d37ci6vzurychx.cloudfront.net/misc/taxi+_zone_lookup.csv'
-    borough_lookup = pd.read_csv(borough_lookup_url, , usecols=['LocationID', 'Borough', 'Zone'])  
+    borough_lookup = pd.read_csv(borough_lookup_url,  usecols=['LocationID', 'Borough', 'Zone'])  
 
     # Merge datasets
     merged_data = pd.merge(final_df_2022, borough_lookup, left_on='PULocationID', right_on='LocationID')
