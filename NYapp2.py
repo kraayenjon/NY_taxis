@@ -25,25 +25,25 @@ def load_and_process_data():
 
         df_taxi_grouped = df.groupby(['pickup_date', 'PULocationID', 'DOLocationID'], as_index=False).agg(
             total_trips=('pickup_date', 'count'),
-            passenger_count_mean=('passenger_count', 'mean'),
+            #passenger_count_mean=('passenger_count', 'mean'),
             passenger_count_sum=('passenger_count', 'sum'),
-            trip_distance_mean=('trip_distance', 'mean'),
+            #trip_distance_mean=('trip_distance', 'mean'),
             trip_distance_sum=('trip_distance', 'sum'),
             PULocationID=('PULocationID', 'first'),
             DOLocationID=('DOLocationID', 'first'),
-            payment_type=('payment_type', 'median'),
+            #payment_type=('payment_type', 'median'),
             fare_amount_mean=('fare_amount', 'mean'),
             fare_amount_sum=('fare_amount', 'sum'),
-            extra=('extra', 'sum'),
-            tip_amount_mean=('tip_amount', 'mean'),
+            #extra=('extra', 'sum'),
+            #tip_amount_mean=('tip_amount', 'mean'),
             tip_amount_sum=('tip_amount', 'sum'),
-            tolls_amount=('tolls_amount', 'sum'),
-            total_amount_mean=('total_amount', 'mean'),
+            #tolls_amount=('tolls_amount', 'sum'),
+           # total_amount_mean=('total_amount', 'mean'),
             total_amount_sum=('total_amount', 'sum'),
-            congestion_surcharge_mean=('congestion_surcharge', 'mean'),
-            congestion_surcharge_sum=('congestion_surcharge', 'sum'),
-            airport_fee_mean=('airport_fee', 'mean'),
-            airport_fee_sum=('airport_fee', 'sum')
+            #congestion_surcharge_mean=('congestion_surcharge', 'mean'),
+            #congestion_surcharge_sum=('congestion_surcharge', 'sum'),
+            #airport_fee_mean=('airport_fee', 'mean'),
+            #airport_fee_sum=('airport_fee', 'sum')
         )
 
         final_df = pd.concat([final_df, df_taxi_grouped])
@@ -52,7 +52,7 @@ def load_and_process_data():
     final_df['pickup_date'] = pd.to_datetime(final_df['pickup_date'])
     final_df['month'] = final_df['pickup_date'].dt.month
     final_df_2022 = final_df[final_df['pickup_date'].dt.year >= 2022].copy()
-    final_df_2022.loc[:, 'tip_ratio'] = final_df_2022['tip_amount_sum'] / final_df_2022['total_amount_sum']
+    final_df_2022.loc[:, 'tip_ratio'] = final_df_2022['tip_amount_sum'] / final_df_2022['fare_amount_sum']
 
     # Download and process shapefile
     url = 'https://d37ci6vzurychx.cloudfront.net/misc/taxi_zones.zip'
@@ -62,18 +62,32 @@ def load_and_process_data():
             z.extractall(temp_dir)  # Extract all files to the temporary directory
             shapefile = gpd.read_file(f"{temp_dir}/taxi_zones.shp")
 
+    # filtering shapefile
+    shapefile = shapefile.drop(columns=['OBJECTID', 'Shape_Leng', 'Shape_Area', 'LocationID', 'borough'], axis=1)
+    
     # Transform CRS
     shapefile.to_crs(pyproj.CRS.from_epsg(4326), inplace=True)
 
     # Download borough lookup
     borough_lookup_url = 'https://d37ci6vzurychx.cloudfront.net/misc/taxi+_zone_lookup.csv'
-    borough_lookup = pd.read_csv(borough_lookup_url)
+    borough_lookup = pd.read_csv(borough_lookup_url, , usecols=['LocationID', 'Borough', 'Zone'])  
 
     # Merge datasets
     merged_data = pd.merge(final_df_2022, borough_lookup, left_on='PULocationID', right_on='LocationID')
+
+    # dropping columns
+    merged_data = merged_data.drop(columns= ['pickup_date',
+       'PULocationID', 'DOLocationID',
+       'fare_amount_sum',  'tip_amount_sum','LocationID'], axis=1)
+
+    # merging with shapefile to get the geometry
     merged_data_gps = pd.merge(merged_data, shapefile, left_on='Zone', right_on='zone')
 
-    merged_data_gps_grouped = merged_data_gps.groupby('zone')[['zone', 'borough', 'geometry', 'total_amount_sum', 'tip_ratio']].agg({
+    #filtering 
+    merged_data_gps = merged_data_gps.drop(columns=['zone'] , axis=1)
+    
+    
+    merged_data_gps_grouped = merged_data_gps.groupby('Zone')[['Zone', 'Borough', 'geometry', 'total_amount_sum', 'tip_ratio']].agg({
         'total_amount_sum': 'sum',
         'tip_ratio': 'mean',
         'geometry': 'first',
@@ -89,7 +103,7 @@ def load_and_process_data():
     # Filter for Manhattan borough if necessary
     geo_df_manhattan = geo_df[geo_df['borough'] == 'Manhattan']
 
-    return geo_df_manhattan,merged_data
+    return geo_df_manhattan,cleaned_data
 
 
 
@@ -129,12 +143,6 @@ with tabs[1]:
     col2.metric("Total Passengers", total_passengers_formatted)
     col3.metric("Total Fares", total_fares_formatted)
     col4.metric('Avg Fare', avg_fare_formatted)
-
-    #grouping by month
-    #monthly_trips = df.groupby('month', as_index=False).agg({'total_trips': 'sum'})
-    #monthly_trips['month'] = monthly_trips['month'].apply(lambda x: calendar.month_abbr[x])
-    #monthly_trips['total_trips_M'] = monthly_trips['total_trips']/1000000
-    #monthly_trips = monthly_trips.sort_values('month', ascending=True)
 
     #grouping by month
     monthly_trips = df.groupby('month', as_index=False).agg({'total_trips': 'sum'})
