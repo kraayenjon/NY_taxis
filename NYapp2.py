@@ -123,7 +123,7 @@ geo_df_manhattan,df = load_and_process_data()
 # Project Info tab
 with tabs[0]:
     st.title('Project Info')
-    st.subheader('
+    #st.subheader('')
     st.write("Add your project information here.")
     
 # EDA tab
