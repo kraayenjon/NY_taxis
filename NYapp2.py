@@ -11,7 +11,7 @@ import calendar
 
 
 # Wrap your data processing in a function that Streamlit can cache to avoid reloading on every interaction.
-@st.cache_data(suppress_st_warning=True, allow_output_mutation=True)
+@st.cache_data()
 def load_and_process_data():
     final_df = pd.DataFrame()
 
