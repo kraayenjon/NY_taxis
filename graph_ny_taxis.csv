@@ -1,0 +1,50 @@
+,Borough_PU,Borough_DO,total_trips
+0,Bronx,Bronx,24884
+1,Bronx,Brooklyn,4454
+2,Bronx,EWR,15
+3,Bronx,Manhattan,17139
+4,Bronx,Queens,4373
+5,Bronx,Staten Island,245
+6,Bronx,Unknown,1069
+7,Brooklyn,Bronx,4362
+8,Brooklyn,Brooklyn,130458
+9,Brooklyn,EWR,941
+10,Brooklyn,Manhattan,121036
+11,Brooklyn,Queens,31054
+12,Brooklyn,Staten Island,968
+13,Brooklyn,Unknown,2349
+14,EWR,Bronx,1
+15,EWR,Brooklyn,11
+16,EWR,EWR,8739
+17,EWR,Manhattan,127
+18,EWR,Queens,32
+19,EWR,Staten Island,14
+20,EWR,Unknown,1199
+21,Manhattan,Bronx,137500
+22,Manhattan,Brooklyn,877296
+23,Manhattan,EWR,96672
+24,Manhattan,Manhattan,32716396
+25,Manhattan,Queens,1348707
+26,Manhattan,Staten Island,4395
+27,Manhattan,Unknown,100394
+28,Queens,Bronx,73043
+29,Queens,Brooklyn,510268
+30,Queens,EWR,5032
+31,Queens,Manhattan,1941881
+32,Queens,Queens,820414
+33,Queens,Staten Island,4301
+34,Queens,Unknown,98302
+35,Staten Island,Bronx,258
+36,Staten Island,Brooklyn,734
+37,Staten Island,EWR,18
+38,Staten Island,Manhattan,907
+39,Staten Island,Queens,397
+40,Staten Island,Staten Island,854
+41,Staten Island,Unknown,65
+42,Unknown,Bronx,9173
+43,Unknown,Brooklyn,37686
+44,Unknown,EWR,2872
+45,Unknown,Manhattan,228592
+46,Unknown,Queens,57135
+47,Unknown,Staten Island,461
+48,Unknown,Unknown,228320
