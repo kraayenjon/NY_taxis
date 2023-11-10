@@ -215,8 +215,7 @@ with tabs[2]:
                 zoom=10,
                 center = {"lat": 40.7831, "lon":-73.9654}, #central park
                 opacity=0.5,
-                labels={'total_amount_sum': 'Total Amount', 'Zone':'Zone', 'tip_ratio':'Tip Ratio'},
-            featureidkey="properties.Zone"
+                labels={'total_amount_sum': 'Total Amount', 'Zone':'Zone', 'tip_ratio':'Tip Ratio'}
             )
         fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
 
