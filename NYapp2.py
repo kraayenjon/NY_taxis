@@ -148,7 +148,7 @@ with tabs[1]:
     col4.metric('Avg Fare', avg_fare_formatted)
 
     #grouping by month
-    df['pickup_date'] = pd.to_datetime(final_df['pickup_date'])
+    df['pickup_date'] = pd.to_datetime(df['pickup_date'])
     df['month'] = df['pickup_date'].dt.month
     
     monthly_trips = df.groupby('month', as_index=False).agg({'total_trips': 'sum'})
