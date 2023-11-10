@@ -206,7 +206,8 @@ with tabs[2]:
                 range_color=(0, max(geo_df_manhattan.total_amount_sum)),
                 mapbox_style="open-street-map",
                 zoom=10,
-                center={"lat": 40.7128, "lon": -74.0060},
+                #center={"lat": 40.7128, "lon": -74.0060},
+                center = {"lat": 40.7831, "lon":73.9654}, #central park
                 opacity=0.5,
                 labels={'total_amount_sum': 'Total Amount'}
             )
