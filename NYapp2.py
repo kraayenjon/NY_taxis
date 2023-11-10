@@ -103,7 +103,7 @@ def load_and_process_data():
     # Filter for Manhattan borough if necessary
     geo_df_manhattan = geo_df[geo_df['borough'] == 'Manhattan']
 
-    return geo_df_manhattan,cleaned_data
+    return geo_df_manhattan,merged_data
 
 
 
