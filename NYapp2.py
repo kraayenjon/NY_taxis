@@ -16,10 +16,14 @@ def load_and_process_data():
     final_df = pd.DataFrame()
 
     # Process taxi data
-    for i in range(1, 9):  # You can adjust the range for the months you want to include
+    for i in range(1, 13):  # You can adjust the range for the months you want to include
         month = str(i).zfill(2)
         url = f'https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2022-{month}.parquet'
-        df = pd.read_parquet(url)
+        selected_columns = ['tpep_pickup_datetime', 'passenger_count', 'trip_distance', 
+                           'PULocationID','DOLocationID', 'fare_amount', 'tip_amount',
+                           'total_amount']
+
+        df = pd.read_parquet(url, columns=selected_columns)
 
         df['pickup_date'] = pd.to_datetime(df['tpep_pickup_datetime']).dt.date
 
