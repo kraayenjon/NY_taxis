@@ -3,6 +3,7 @@ import pandas as pd
 import geopandas as gpd
 import pyproj
 import plotly.express as px
+import plotly.graph_objects as go
 import requests
 from io import BytesIO
 import zipfile
@@ -226,7 +227,76 @@ with tabs[2]:
     except Exception as e:
             st.error(f"An error occurred: {e}")
 
+
 # Graph tab
 with tabs[3]:
     st.title('Graph')
     st.write("Add your graph code here.")
+    
+    # Define the CSV file path
+    csv_file_path = 'your_predefined_file_path.csv'
+
+    try:
+        # Read data from the predefined CSV file
+        df = pd.read_csv(csv_file_path)
+
+        # Create a unique list of all boroughs
+        all_boroughs = list(set(df['Borough_PU'].tolist() + df['Borough_DO'].tolist()))
+
+# Specify colors for each borough based on a predefined color list
+        color_list = [
+    "rgba(31, 119, 180, 0.8)",
+    "rgba(255, 127, 14, 0.8)",
+    "rgba(44, 160, 44, 0.8)",
+    "rgba(214, 39, 40, 0.8)",
+    "rgba(148, 103, 189, 0.8)",
+    "rgba(140, 86, 75, 0.8)",
+    "rgba(227, 119, 194, 0.8)"
+]
+
+# Create a dictionary to map boroughs to colors
+        color_mapping = {borough: color_list[i] for i, borough in enumerate(all_boroughs)}
+
+# Create nodes using unique boroughs
+        nodes = [{'pad': 15, 'thickness': 15, 'line': dict(color='black', width=0.5), 'label': borough, 'color': color_mapping[borough]}
+         for borough in all_boroughs]
+
+# Create links using the DataFrame
+        links = []
+        for index, row in df.iterrows():
+        links.append({
+        'source': all_boroughs.index(row['Borough_PU']),
+        'target': len(all_boroughs) + all_boroughs.index(row['Borough_DO']),
+        'value': row['total_trips'],
+        'label': f"{row['Borough_PU']} to {row['Borough_DO']}",
+        'color': color_mapping[row['Borough_PU']]
+    })
+        # Create the Sankey diagram
+        fig = go.Figure(data=[go.Sankey(
+    valueformat=".0f",
+    valuesuffix=" trips",
+    node=dict(
+        pad=15,
+        thickness=15,
+        line=dict(color='black', width=0.5),
+        label=[node['label'] for node in nodes],
+        color=[node['color'] for node in nodes]
+    ),
+    link=dict(
+        source=[link['source'] for link in links],
+        target=[link['target'] for link in links],
+        value=[link['value'] for link in links],
+        label=[link['label'] for link in links],
+        color=[link['color'] for link in links]
+    )
+)])
+
+        # Update layout
+        fig.update_layout(title_text="Total Trips between Boroughs", font_size=10)
+
+        # Display the Sankey diagram
+        st.plotly_chart(fig)
+
+    except Exception as e:
+        st.error(f"An error occurred: {e}")
+
