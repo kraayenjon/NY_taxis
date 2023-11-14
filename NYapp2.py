@@ -124,13 +124,18 @@ geo_df_manhattan,df = load_and_process_data()
 # Project Info tab
 with tabs[0]:
     st.title('Project Info')
-    #st.subheader('')
-    st.write("Add your project information here.")
+    project_info = """
+This project centers on New York City's yellow taxi ride data, sourced from the Taxi and Limousine Commission (TLC).   The dataset contains crucial details like pick-up/drop-off times, locations, distances, fares, and payment methods, providing a comprehensive foundation for in-depth data analysis.   
+
+The background script aggregates monthly NYC yellow taxi ride data for the year 2022 returning daily summaries, categorizing by pick-up/drop-off locations, delivering both totals and averages across various metrics.
+    """
+    st.markdown(project_info)
+    st.subheader("Contributors")
+    st.markdown("[Encarna Sanchez](https://www.linkedin.com/in/encarna-s-18385414/) | [Jonathan Kraayenbrink](https://www.linkedin.com/in/jonathan-kraayenbrink/) | [Mauricio Cortes](https://www.linkedin.com/in/mauricio-cortes-b2478a3b/) | [Misaki Sagara](https://www.linkedin.com/in/misaki-sagara-640731110/)")
     
 # EDA tab
 with tabs[1]:
-    st.title('EDA')
-    #st.write("Add your EDA code here.")
+    st.title('Exploratory Data Analysis')
 
     total_rides = df['total_trips'].sum()
     total_fares = df['total_amount_sum'].sum()
@@ -176,8 +181,9 @@ with tabs[1]:
     
     df_grouped = merged_data_grouped.groupby('Zone')[['Zone', 'Borough', 'total_amount_sum','passenger_count_sum', 'trip_distance_sum','total_trips_per_month']].agg({'total_amount_sum':'sum', 'passenger_count_sum':'sum', 'trip_distance_sum':'sum', 'Borough':'first', 'total_trips_per_month':'first'})
 
-
-    #st.dataframe(df_grouped, use_container_width=True)
+    st.subheader('Insights on Pick-Up Zones')
+    st.write("Explore the table below for key insights into diverse pick-up zones in New York. Our analysis, organized by pick-up zones, reveals trends and various metrics.")
+    
     st.data_editor(
     df_grouped,
     column_config={
@@ -231,7 +237,7 @@ with tabs[2]:
 # Graph tab
 with tabs[3]:
     st.title('Graph')
-    st.write("Add your graph code here.")
+    st.write("Discover the relationships between pick-up and drop-off boroughs in the following Sankey diagram. Each flow represents the volume of taxi trips between specific borough pairs, providing a visual representation of the transportation dynamics across New York City.")
     
     # Define the CSV file path
     csv_file_path = 'https://raw.githubusercontent.com/kraayenjon/NY_taxis/main/graph_ny_taxis.csv'
